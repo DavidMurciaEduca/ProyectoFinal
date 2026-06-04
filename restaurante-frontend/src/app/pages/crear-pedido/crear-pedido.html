@@ -1,0 +1,370 @@
+<div class="min-h-screen bg-gray-100 p-8">
+
+  <!-- HEADER -->
+  <div class="mb-8">
+
+    <h1 class="text-4xl font-bold text-gray-800">
+      🍽️ Crear Pedido
+    </h1>
+
+
+  </div>
+  <!-- MODAL SUCCESS -->
+<div
+  *ngIf="mostrarMensaje"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+  <div *ngIf="mensajeExito != ''"
+    class="bg-white rounded-3xl shadow-2xl p-8 w-[400px] text-center animate-scaleIn">
+
+    <!-- ICONO -->
+    <div
+      class="w-24 h-24 mx-auto rounded-full bg-green-100 flex items-center justify-center text-5xl mb-6">
+
+      ✅
+
+    </div>
+
+    <!-- TÍTULO -->
+    <h2 class="text-3xl font-bold text-gray-800 mb-3">
+
+      Success
+
+    </h2>
+
+    <!-- TEXTO -->
+    <p class="text-gray-500 text-lg mb-8">
+
+      {{ mensajeExito }}
+
+    </p>
+
+    <!-- BOTÓN -->
+    <button
+      (click)="cerrarMensaje()"
+      class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-2xl shadow-lg transition">
+
+      OK
+
+    </button>
+
+  </div>
+  <div *ngIf="mensajeError != ''"
+    class="bg-white rounded-3xl shadow-2xl p-8 w-[400px] text-center animate-scaleIn">
+
+    <div
+      class="w-24 h-24 mx-auto rounded-full bg-red-100 flex items-center justify-center text-5xl mb-6">
+      ❌
+    </div>
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-3">
+      Error
+    </h2>
+
+    <p class="text-gray-500 text-lg mb-8">
+      {{ mensajeError }}
+    </p>
+
+    <button
+      (click)="cerrarMensaje()"
+      class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-2xl shadow-lg transition">
+      Intentar de nuevo
+    </button>
+
+  </div>
+
+</div>
+  <!-- FORMULARIO -->
+  <div class="bg-white rounded-3xl shadow-xl p-8">
+
+    <!-- ZONA -->
+    <div class="mb-6">
+
+      <label class="block text-sm font-semibold mb-2 text-gray-700">
+        Zona
+      </label>
+
+      <input
+        type="text"
+        [value]="usuario?.zona?.nombre"
+        disabled
+        class="w-full border border-gray-300 rounded-xl p-3 bg-gray-100 text-gray-600"
+      >
+
+    </div>
+
+    <!-- MESAS -->
+    <div class="mb-8">
+
+      <label class="block text-sm font-semibold mb-2 text-gray-700">
+        Mesa
+      </label>
+
+      <select
+        [(ngModel)]="mesaSeleccionada"
+        class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+
+        <option value="">
+          Seleccionar mesa
+        </option>
+
+        <option
+          *ngFor="let mesa of mesas"
+          [value]="mesa.id">
+
+          Mesa {{ mesa.numero }}
+
+        </option>
+
+      </select>
+
+    </div>
+
+    <!-- BOTÓN PRODUCTOS -->
+    <div class="mb-8">
+
+      <button
+        (click)="mostrarModalProductos = true"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl shadow-lg transition">
+
+        ➕ Añadir producto
+
+      </button>
+
+    </div>
+
+    <!-- LÍNEAS PEDIDO -->
+    <div class="space-y-4">
+
+  <div
+    *ngFor="let item of pedido; let i = index"
+    class="bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm">
+
+    <!-- GRID PRINCIPAL -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+
+      <!-- PRODUCTO -->
+      <div>
+        <label class="block text-sm font-semibold mb-2">
+          Producto
+        </label>
+
+        <input
+          type="text"
+          [value]="item.nombre"
+          disabled
+          class="w-full border rounded-xl p-3 bg-gray-100"
+        >
+      </div>
+
+      <!-- CANTIDAD -->
+      <div>
+        <label class="block text-sm font-semibold mb-2">
+          Cantidad
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="item.cantidad"
+          min="1"
+          class="w-full border rounded-xl p-3"
+        >
+      </div>
+
+      <!-- NOTAS -->
+      <div>
+        <label class="block text-sm font-semibold mb-2">
+          Notas
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="item.notas"
+          placeholder="Sin cebolla, poco hecho..."
+          class="w-full border rounded-xl p-3"
+        >
+      </div>
+
+      <!-- BOTONES -->
+      <div class="flex gap-3 items-end">
+
+        <!-- EDITAR -->
+        <button
+          (click)="abrirEditorProducto(i)"
+          class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-3 rounded-xl transition w-full">
+
+          ✏️ Editar
+
+        </button>
+
+        <!-- ELIMINAR -->
+        <button
+          (click)="eliminarProducto(i)"
+          class="bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl transition w-full">
+
+          🗑️ Eliminar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+    <!-- BOTÓN GUARDAR -->
+    <div class="mt-10 text-right">
+
+      <button
+      type="button"
+      (click)="guardarPedido()"
+        class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-2xl shadow-lg transition">
+
+        💾 Guardar Pedido
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL PRODUCTOS -->
+  <div
+    *ngIf="mostrarModalProductos"
+    class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+
+    <div
+      class="bg-white w-full max-w-7xl rounded-3xl shadow-2xl overflow-hidden animate-fadeIn">
+
+      <!-- HEADER MODAL -->
+      <div class="flex justify-between items-center border-b p-6">
+
+        <div>
+
+          <h2 class="text-3xl font-bold">
+            🍽️ Productos
+          </h2>
+
+          <p class="text-gray-500 mt-1">
+            Selecciona productos para el pedido
+          </p>
+
+        </div>
+
+        <!-- CERRAR -->
+        <button
+          (click)="cerrarModal()"
+          class="w-12 h-12 rounded-full bg-red-100 hover:bg-red-200 text-red-600 text-2xl flex items-center justify-center transition">
+
+          ✕
+
+        </button>
+
+      </div>
+
+      <!-- CONTENIDO -->
+      <div class="p-8 max-h-[80vh] overflow-y-auto">
+
+        <!-- FILTROS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+          <!-- BUSCAR -->
+          <input
+            type="text"
+            [(ngModel)]="nombreBusqueda"
+            placeholder="Buscar producto..."
+            class="border rounded-xl p-3"
+          >
+
+          <!-- CATEGORÍAS -->
+          <select
+            [(ngModel)]="categoriaSeleccionada"
+            class="border rounded-xl p-3">
+
+            <option value="">
+              Todas las categorías
+            </option>
+
+            <option
+              *ngFor="let categoria of categorias"
+              [value]="categoria.id">
+
+              {{ categoria.nombre }}
+
+            </option>
+
+          </select>
+
+          <!-- RESET -->
+          <button
+            (click)="resetFiltros()"
+            class="bg-gray-600 hover:bg-gray-700 text-white rounded-xl p-3">
+
+            Reset filtros
+
+          </button>
+
+        </div>
+
+        <!-- GRID PRODUCTOS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div
+            *ngFor="let p of productosFiltrados"
+            class="bg-gray-50 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+
+            <!-- IMAGEN -->
+            <img
+              [src]="getImage(p.imagen)"
+              class="w-full h-52 object-cover"
+              loading="lazy"
+            >
+
+            <!-- INFO -->
+            <div class="p-5">
+
+              <h3 class="text-2xl font-bold text-gray-800">
+
+                {{ p.nombre }}
+
+              </h3>
+
+              <p class="text-gray-500 mt-2 line-clamp-3">
+
+                {{ p.descripcion }}
+
+              </p>
+
+              <div class="flex justify-between items-center mt-5">
+
+                <span class="text-green-600 font-bold text-xl">
+
+                  {{ p.precio }} €
+
+                </span>
+
+                <button
+                  (click)="agregarProducto(p)"
+                  class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl transition">
+
+                  Seleccionar
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
