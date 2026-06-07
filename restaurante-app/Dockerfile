@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 # Instalar extensiones necesarias
 RUN apt-get update && apt-get install -y \
@@ -14,10 +14,11 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN composer install --optimize-autoloader --no-dev
+# Create .env from example so artisan commands work during build
+RUN cp .env.example .env
 
-RUN php artisan key:generate
+RUN composer install --optimize-autoloader --no-dev
 
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
