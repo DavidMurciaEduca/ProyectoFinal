@@ -1,0 +1,181 @@
+<div class="min-h-screen bg-gray-100 p-6">
+
+  <!-- TÍTULO -->
+  <h1 class="text-3xl font-bold text-center mb-6">
+    🍽️ Menú Restaurante
+  </h1>
+
+  <!-- FILTROS -->
+  <div class="bg-white p-5 rounded-2xl shadow-lg mb-8">
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+      <!-- BUSCADOR -->
+      <input
+        type="text"
+        [(ngModel)]="nombreBusqueda"
+        placeholder="Buscar producto..."
+        class="border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500">
+
+      <!-- CATEGORÍA -->
+      <select
+        [(ngModel)]="categoriaSeleccionada"
+        (ngModelChange)="paginaActual = 1"
+        class="border rounded-xl px-4 py-3">
+
+        <option value="">
+          Todas las categorías
+        </option>
+
+        <option
+          *ngFor="let c of categorias"
+          [value]="c.id">
+
+          {{ c.nombre }}
+
+        </option>
+
+      </select>
+
+      <!-- ESTADO -->
+      <select
+        [(ngModel)]="estadoSeleccionado"
+        class="border rounded-xl px-4 py-3">
+
+        <option value="">
+          Todos
+        </option>
+
+        <option value="1">
+          Activos
+        </option>
+
+        <option value="0">
+          Inactivos
+        </option>
+
+      </select>
+
+      <!-- RESET -->
+      <button
+        (click)="resetFiltros()"
+        class="bg-gray-800 text-white rounded-xl px-4 py-3 hover:bg-gray-700 transition">
+
+        Reset
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- PRODUCTOS -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <div
+        *ngFor="let p of productosPaginados"
+        class="bg-white rounded-2xl shadow-lg p-5 transition hover:scale-105 cursor-pointer"
+        (click)="abrirProducto(p)">
+
+      <!-- IMAGEN -->
+      <div class="w-full h-48 mb-4">
+
+        <img
+          [src]="getImage(p.imagen)"
+          class="w-full h-full object-cover rounded-xl"
+          loading="lazy">
+
+      </div>
+
+      <!-- NOMBRE -->
+      <h2 class="text-xl font-bold">
+        {{ p.nombre }}
+      </h2>
+
+      <!-- DESCRIPCIÓN -->
+      <p class="text-gray-600 mt-2 truncate">
+        {{ p.descripcion }}
+      </p>
+
+      <!-- PRECIO -->
+      <p class="text-green-600 font-bold mt-3 text-lg">
+        {{ p.precio }} €
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- PAGINACIÓN -->
+  <div class="flex justify-center items-center gap-4 mt-10">
+
+    <!-- ANTERIOR -->
+    <button
+      (click)="paginaAnterior()"
+      [disabled]="paginaActual === 1"
+      class="bg-gray-800 text-white px-5 py-2 rounded-xl disabled:opacity-50">
+
+      ←
+
+    </button>
+
+    <!-- INFO -->
+    <span class="font-bold text-lg">
+
+      Página {{ paginaActual }}
+      de
+      {{ totalPaginas }}
+
+    </span>
+
+    <!-- SIGUIENTE -->
+    <button
+      (click)="paginaSiguiente()"
+      [disabled]="paginaActual === totalPaginas"
+      class="bg-gray-800 text-white px-5 py-2 rounded-xl disabled:opacity-50">
+
+      →
+
+    </button>
+
+  </div>
+
+</div>
+<!-- MODAL -->
+<div *ngIf="modalAbierto"
+     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+
+  <!-- CONTENIDO -->
+  <div class="bg-white w-full max-w-3xl rounded-2xl p-6 relative">
+
+    <!-- BOTÓN CERRAR -->
+    <button
+      (click)="cerrarModal()"
+      class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-gray-700 hover:bg-red-500 hover:text-white transition">
+
+      ✕
+    </button>
+
+    <!-- IMAGEN -->
+    <img
+      [src]="getImage(productoSeleccionado?.imagen)"
+      class="w-full h-60 object-cover rounded-xl mb-4">
+
+    <!-- NOMBRE -->
+    <h2 class="text-2xl font-bold">
+      {{ productoSeleccionado?.nombre }}
+    </h2>
+
+    <!-- DESCRIPCIÓN COMPLETA -->
+    <p class="text-gray-600 mt-3">
+      {{ productoSeleccionado?.descripcion }}
+    </p>
+
+    <!-- PRECIO -->
+    <p class="text-green-600 font-bold text-xl mt-4">
+      {{ productoSeleccionado?.precio }} €
+    </p>
+
+  </div>
+
+</div>
