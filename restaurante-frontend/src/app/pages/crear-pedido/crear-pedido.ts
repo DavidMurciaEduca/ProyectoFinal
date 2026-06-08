@@ -76,7 +76,7 @@ export class CrearPedido implements OnInit {
       this.cargarCategorias();
 
     }
-
+    this.cdr.detectChanges();
   }
 
   cargarMesas() {
@@ -92,7 +92,7 @@ export class CrearPedido implements OnInit {
         this.mesas = data;
 
         this.cargandoMesas = false;
-
+        this.cdr.detectChanges();
       },
 
       error: (err) => {
@@ -115,7 +115,7 @@ export class CrearPedido implements OnInit {
         next: (data: any) => {
 
           this.productos = data;
-
+          this.cdr.detectChanges();
         },
 
         error: (err) => {

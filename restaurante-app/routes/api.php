@@ -15,7 +15,7 @@ Route::get('/test', function () {
     ]);
 });
 Route::get('/productos', function () {
-    return \App\Models\Producto::all();
+    return \App\Models\Producto::where('activo', true)->get();
 });
 Route::get('/categorias', [CategoriaController::class, 'index']);
 Route::get('/mesas/zona/{id}', [MesaController::class, 'porZona']);

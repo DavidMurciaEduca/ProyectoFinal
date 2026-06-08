@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+import { LoadingService } from '../../services/loading';
 @Component({
   selector: 'app-login',
   imports: [FormsModule,CommonModule],
@@ -14,7 +15,7 @@ export class Login {
   email = '';
   password = '';
   errorMessage = '';
-  constructor(private authService: AuthService,private router: Router) {}
+  constructor(private authService: AuthService,private router: Router,private loadingService: LoadingService) {}
 
   login() {
 
@@ -22,10 +23,11 @@ export class Login {
     email: this.email,
     password: this.password
   };
-
+  this.loadingService.show();
   this.authService.login(data).subscribe({
-
+     
     next: (response: any) => {
+      this.loadingService.hide();
 
       this.errorMessage = '';
       // guardar token
@@ -41,6 +43,7 @@ export class Login {
     },
 
     error: (error) => {
+      this.loadingService.hide();
       this.errorMessage = 'Credenciales incorrectas';
     }
 

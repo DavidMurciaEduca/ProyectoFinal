@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { Loading } from '../app/pages/loading/loading';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
             CommonModule,
-            RouterModule
+            RouterModule,
+            Loading
           ],
   templateUrl: './app.html',
 })

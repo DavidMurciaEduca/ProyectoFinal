@@ -312,6 +312,7 @@
         ✕
 
       </button>
+      
 
     </div>
 
@@ -520,7 +521,7 @@
       <h2 class="text-3xl font-bold">
         🍽️ Seleccionar producto
       </h2>
-
+      
       <button
         (click)="mostrarModalProductosEditar = false"
         class="bg-red-500 text-white w-10 h-10 rounded-full">
@@ -530,9 +531,41 @@
       </button>
 
     </div>
+      <!-- FILTROS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 
+          <!-- BUSCAR -->
+          <input
+            type="text"
+            [(ngModel)]="nombreBusqueda"
+            placeholder="Buscar producto..."
+            class="border rounded-xl p-3"
+          >
+
+          <!-- CATEGORÍAS -->
+          <select
+            [(ngModel)]="categoriaSeleccionada"
+            class="border rounded-xl p-3">
+
+            <option value="">
+              Todas las categorías
+            </option>
+
+            <option
+              *ngFor="let categoria of categorias"
+              [value]="categoria.id">
+              {{ categoria.nombre }}
+            </option>
+          </select>
+          <!-- RESET -->
+          <button
+            (click)="resetFiltros()"
+            class="bg-gray-600 hover:bg-gray-700 text-white rounded-xl p-3">
+            Reset filtros
+          </button>
+        </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
+      
       <div
         *ngFor="let p of productosFiltrados"
         class="border rounded-2xl p-4">
