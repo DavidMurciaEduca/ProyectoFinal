@@ -8,10 +8,23 @@
     </h1>
 
   </div>
+  <!-- LOADING -->
+    <div
+      *ngIf="!todoLosPedidos"
+      class="text-center py-20">
 
+      <div class="text-3xl mb-4">
+        ⏳
+      </div>
+
+      <p class="text-xl font-semibold">
+        Cargando pedido...
+      </p>
+
+    </div>
   <!-- TABLA -->
-  <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
-
+  <div *ngIf="todoLosPedidos" class="bg-white rounded-3xl shadow-xl overflow-hidden ">
+    
     <table class="w-full">
 
       <thead class="bg-gray-800 text-white">

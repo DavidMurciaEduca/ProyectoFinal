@@ -44,6 +44,7 @@ export class DetallePedidos implements OnInit {
   mostrarModalProductos = false;
   paginaActual = 1;
   productosPorPagina = 6;
+  todoLosPedidos = false;
   constructor(
     private pedidosService: Pedidos,
     private mesasService: MesasService,
@@ -92,7 +93,7 @@ export class DetallePedidos implements OnInit {
 
         this.totalFinalizados =
           res.total_finalizados;
-
+        this.todoLosPedidos = true;
         this.cdr.detectChanges();
 
       },
