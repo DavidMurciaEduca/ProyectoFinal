@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Pedidos {
-  apiUrl = 'http://localhost:8000/api';
+  apiUrl = 'https://restaurante-app-production-742f.up.railway.app/api';
    constructor(private http: HttpClient) {}
   crearPedido(data: any) {
       return this.http.post(
-        'http://localhost:8000/api/pedidos',
+        'https://restaurante-app-production-742f.up.railway.app/api/pedidos',
         data
       );
     }

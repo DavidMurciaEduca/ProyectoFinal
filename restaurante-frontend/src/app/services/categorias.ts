@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CategoriasService {
 
-  apiUrl = 'http://localhost:8000/api/categorias';
+  apiUrl = 'https://restaurante-app-production-742f.up.railway.app/api/categorias';
 
   constructor(private http: HttpClient) {}
 
