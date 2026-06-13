@@ -13,6 +13,7 @@ Route::get('/test', function () {
         'ok' => true,
         'message' => 'API funcionando'
     ]);
+    
 });
 Route::get('/productos', function () {
     return \App\Models\Producto::where('activo', true)->get();

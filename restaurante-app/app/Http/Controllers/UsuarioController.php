@@ -48,7 +48,7 @@ class UsuarioController extends Controller
             'zona_id' => $zonaId
         ]);
 
-        return redirect('/usuarios')->with('success', 'Usuario creado');
+        return redirect('/usuarios')->with('success', 'Usuario creado correctamente');
     }
 
     // FORMULARIO EDITAR

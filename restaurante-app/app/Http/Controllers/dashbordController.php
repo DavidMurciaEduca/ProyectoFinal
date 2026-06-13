@@ -65,7 +65,7 @@ class dashbordController extends Controller
 
     ->where('pedidos.estado', 'finalizado')
 
-    ->where('categorias.nombre','Plato especial / Bebida especial');
+    ->where('categorias.nombre','Plato estrella / Bebida estrella');
 
     if ($filtro == 'hoy') {
 

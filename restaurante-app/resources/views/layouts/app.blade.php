@@ -29,7 +29,7 @@
             </div>
 
             <div class="hidden md:flex space-x-4 text-sm items-center">
-                <a href="/dashboard" class="hover:text-yellow-400 transition">Dashboard</a>
+                <a href="/dashboard" class="hover:text-yellow-400 transition">Principal</a>
                 <a href="/usuarios" class="hover:text-yellow-400 transition">Usuarios</a>
                 <a href="/categorias" class="hover:text-yellow-400 transition">Categorias</a>
                 <a href="/productos" class="hover:text-yellow-400 transition">Productos</a>
@@ -60,7 +60,7 @@
 
         <div x-show="mobileMenuOpen" class="md:hidden bg-gray-800 border-t border-gray-700" style="display: none;">
             <div class="px-4 pt-2 pb-4 space-y-1">
-                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 hover:text-yellow-400 transition">Dashboard</a>
+                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 hover:text-yellow-400 transition">Principal</a>
                 <a href="/usuarios" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 hover:text-yellow-400 transition">Usuarios</a>
                 <a href="/categorias" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 hover:text-yellow-400 transition">Categorias</a>
                 <a href="/productos" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-gray-700 hover:text-yellow-400 transition">Productos</a>
@@ -85,9 +85,22 @@
     </nav>
 
     <main class="container mx-auto p-6">
+        
         @yield('content')
     </main>
-
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session('success') }}',
+            timer: 2500,
+            showConfirmButton: false
+        });
+    });
+    </script>
+@endif
 </body>
 
 </html>

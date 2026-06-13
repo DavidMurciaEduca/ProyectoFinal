@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductosService {
 
-  private apiUrl = 'https://restaurante-app-production-742f.up.railway.app/api';
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 
