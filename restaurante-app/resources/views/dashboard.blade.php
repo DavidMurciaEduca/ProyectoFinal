@@ -126,6 +126,9 @@
                 <th class="p-4 text-left">
                     Unidades vendidas
                 </th>
+                <th class="p-4 text-left">
+                    Bonus
+                </th>
 
             </tr>
 
@@ -147,6 +150,9 @@
 
                     {{ $item->total_vendidos }}
 
+                </td>
+                <td class="p-4 text-blue-600 font-bold">
+                    {{ number_format($item->bonus, 2) }} €
                 </td>
 
             </tr>
@@ -181,6 +187,96 @@
         </h2>
 
     </div>
+    <div class="mt-10 flex justify-end">
+
+    <form method="GET" action="{{ route('dashboard') }}">
+
+        <input type="hidden" name="filtro" value="{{ $filtro }}">
+
+        <select
+            name="mes"
+            onchange="this.form.submit()"
+            class="border rounded-lg px-4 py-2">
+
+            @foreach(range(1,12) as $mes)
+
+                <option
+                    value="{{ $mes }}"
+                    {{ $mesSeleccionado == $mes ? 'selected' : '' }}>
+
+                    {{ \Carbon\Carbon::create()->month($mes)->locale('es')->monthName }}
+
+                </option>
+
+            @endforeach
+
+        </select>
+
+    </form>
+
+</div>
+
+<div class="mt-10">
+
+    <h2 class="text-3xl font-bold mb-4">
+        Ranking Plato Estrella / Bebida Estrella
+    </h2>
+
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+
+        <table class="w-full">
+
+            <thead class="bg-gray-100">
+
+                <tr>
+
+                    <th class="p-4 text-left">
+                        Producto
+                    </th>
+
+                    <th class="p-4 text-left">
+                        Unidades vendidas
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @forelse($rankingProductos as $producto)
+
+                <tr class="border-b">
+
+                    <td class="p-4 font-semibold">
+                        {{ $producto->nombre }}
+                    </td>
+
+                    <td class="p-4 text-green-600 font-bold">
+                        {{ $producto->total_vendidos }}
+                    </td>
+
+                </tr>
+
+                @empty
+
+                <tr>
+
+                    <td colspan="2" class="p-4 text-center text-gray-500">
+                        No hay ventas para este mes
+                    </td>
+
+                </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
 </div>
 
 

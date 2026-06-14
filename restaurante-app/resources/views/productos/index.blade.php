@@ -147,7 +147,7 @@
 
             </a>
 
-            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST">
+            <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" class="form-delete">
 
                 @csrf
                 @method('DELETE')
@@ -282,7 +282,7 @@
                     </a>
 
                     <!-- Eliminar -->
-                    <form action="{{ route('productos.destroy', $producto->id) }}"
+                    <form class="form-delete" action="{{ route('productos.destroy', $producto->id) }}"
                           method="POST">
 
                         @csrf
@@ -366,5 +366,25 @@
         tableView.classList.remove('hidden');
         cardsView.classList.add('hidden');
     }
+</script>
+<script>
+document.querySelectorAll('.form-delete').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: '¿Eliminar Producto?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+});
 </script>
 @endsection

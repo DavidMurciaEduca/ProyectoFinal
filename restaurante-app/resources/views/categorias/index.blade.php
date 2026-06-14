@@ -32,7 +32,7 @@
             Editar
         </a>
 
-        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST">
+        <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" class="form-delete">
 
             @csrf
             @method('DELETE')
@@ -50,5 +50,24 @@
 @endforeach
 
 </div>
+<script>
+document.querySelectorAll('.form-delete').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        Swal.fire({
+            title: '¿Eliminar Categoria?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+});
+</script>
 @endsection

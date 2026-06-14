@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Zona;
 class UsuarioController extends Controller
 {
@@ -19,7 +20,8 @@ class UsuarioController extends Controller
     public function create()
     {
         $zonas = Zona::all();
-        return view('usuarios.create', compact('zonas'));
+        $usuario = Auth::user();
+        return view('usuarios.create', compact('zonas','usuario'));
     }
 
     // GUARDAR USUARIO
@@ -55,8 +57,9 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
+        $usuarioAuth = Auth::user();
         $zonas = Zona::all();
-        return view('usuarios.edit', compact('usuario','zonas'));
+        return view('usuarios.edit', compact('usuario','zonas','usuarioAuth'));
     }
 
     // ACTUALIZAR USUARIO

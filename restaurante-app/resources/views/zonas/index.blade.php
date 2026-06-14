@@ -127,7 +127,7 @@
 
         <!-- Eliminar -->
 
-        <form action="{{ route('zonas.destroy', $zona->id) }}"
+        <form class="form-delete" action="{{ route('zonas.destroy', $zona->id) }}"
               method="POST">
 
             @csrf
@@ -233,7 +233,7 @@
 
                     <!-- Eliminar -->
 
-                    <form action="{{ route('zonas.destroy', $zona->id) }}"
+                    <form class="form-delete" action="{{ route('zonas.destroy', $zona->id) }}"
                           method="POST">
 
                         @csrf
@@ -304,5 +304,24 @@
     });
 
 </script>
+<script>
+document.querySelectorAll('.form-delete').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        Swal.fire({
+            title: '¿Eliminar zona?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+});
+</script>
 @endsection

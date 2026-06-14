@@ -14,7 +14,7 @@ class dashbordController extends Controller
 {
     // filtro
     $filtro = $request->filtro ?? 'hoy';
-
+    $mesSeleccionado = $request->mes ?? Carbon::now()->month;
     // query pedidos finalizados
     $query = Pedido::where('estado', 'finalizado');
 
@@ -67,12 +67,38 @@ class dashbordController extends Controller
 
     ->where('categorias.nombre','Plato estrella / Bebida estrella');
 
+    $rankingProductos = PedidoItem::query()
+
+    ->join('pedidos', 'pedido_items.pedido_id', '=', 'pedidos.id')
+    ->join('productos', 'pedido_items.producto_id', '=', 'productos.id')
+    ->join('categorias', 'productos.categoria_id', '=', 'categorias.id')
+
+    ->where('pedidos.estado', 'finalizado')
+    ->where('categorias.nombre', 'Plato estrella / Bebida estrella')
+
+    ->whereMonth('pedidos.created_at', $mesSeleccionado)
+    ->whereYear('pedidos.created_at', Carbon::now()->year)
+
+    ->select(
+        'productos.nombre',
+        DB::raw('SUM(pedido_items.cantidad) as total_vendidos')
+    )
+
+    ->groupBy(
+        'productos.id',
+        'productos.nombre'
+    )
+
+    ->orderByDesc('total_vendidos')
+
+    ->get();
+
     if ($filtro == 'hoy') {
 
-    $ventasEstrella->whereDate(
-        'pedidos.created_at',
-        Carbon::today()
-    );
+        $ventasEstrella->whereDate(
+            'pedidos.created_at',
+            Carbon::today()
+        );
 
     }
     elseif ($filtro == 'semana') {
@@ -99,10 +125,12 @@ class dashbordController extends Controller
             );
 
     }
+    
     $ventasEstrella = $ventasEstrella
     ->select(
         'users.nombre',
-            DB::raw('SUM(pedido_items.cantidad) as total_vendidos')
+            DB::raw('SUM(pedido_items.cantidad) as total_vendidos'),
+            DB::raw('SUM(pedido_items.cantidad * pedido_items.precio_unitario * 0.10) as bonus')
     )
 
     ->groupBy(
@@ -113,13 +141,16 @@ class dashbordController extends Controller
     ->orderByDesc('total_vendidos')
 
     ->get();
+    
     $totalPlatosEstrella = $ventasEstrella->sum('total_vendidos');
     return view('dashboard', compact(
-        'ingresosPorCamarero',
-        'totalIngresos',
-        'ventasEstrella',
-        'totalPlatosEstrella',
-        'filtro'
-    ));
+    'ingresosPorCamarero',
+    'totalIngresos',
+    'ventasEstrella',
+    'totalPlatosEstrella',
+    'rankingProductos',
+    'mesSeleccionado',
+    'filtro'
+));
 }
 }

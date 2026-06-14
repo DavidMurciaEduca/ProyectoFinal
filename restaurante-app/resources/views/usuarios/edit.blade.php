@@ -64,13 +64,14 @@
                     <option value="cocina" {{ $usuario->tipo_usuario == 'cocina' ? 'selected' : '' }}>
                         Cocina
                     </option>
-
+                    @if($usuarioAuth->tipo_usuario == 'admin')
                     <option value="gerente" {{ $usuario->tipo_usuario == 'gerente' ? 'selected' : '' }}>
                         Gerente
                     </option>
                     <option value="admin" {{ $usuario->tipo_usuario == 'admin' ? 'selected' : '' }}>
                         Admin
                     </option>
+                    @endif
                 </select>
             </div>
             <div id="zonaContainer" class="mb-4 {{ $usuario->tipo_usuario !== 'camarero' ? 'hidden' : '' }}" >

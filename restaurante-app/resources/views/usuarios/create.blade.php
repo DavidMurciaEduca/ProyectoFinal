@@ -93,13 +93,14 @@
                 <option value="cocina">
                     Cocina
                 </option>
-
-                <option value="gerente">
-                    Gerente
-                </option>
-                <option value="admin">
-                    Admin
-                </option>
+                @if($usuario->tipo_usuario== 'admin')
+                    <option value="gerente">
+                        Gerente
+                    </option>
+                    <option value="admin">
+                        Admin
+                    </option>
+                @endif
 
             </select>
 
