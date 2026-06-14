@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Restaurante App</title>
+    <title>AppTece</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -16,7 +16,7 @@
         <div class="container mx-auto flex justify-between items-center px-6 py-3">
 
             <div class="text-xl font-bold tracking-wide">
-                🍽️ Restaurante
+                🍽️ AppTece
             </div>
 
             <div class="flex items-center md:hidden">

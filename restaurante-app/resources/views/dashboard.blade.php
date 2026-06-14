@@ -187,6 +187,13 @@
         </h2>
 
     </div>
+    
+
+<div class="mt-10">
+
+    <h2 class="text-3xl font-bold mb-4">
+        Ranking Plato Estrella / Bebida Estrella
+    </h2>
     <div class="mt-10 flex justify-end">
 
     <form method="GET" action="{{ route('dashboard') }}">
@@ -215,13 +222,6 @@
     </form>
 
 </div>
-
-<div class="mt-10">
-
-    <h2 class="text-3xl font-bold mb-4">
-        Ranking Plato Estrella / Bebida Estrella
-    </h2>
-
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
         <table class="w-full">
