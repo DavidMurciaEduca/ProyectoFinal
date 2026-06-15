@@ -36,13 +36,13 @@
                 <th class="p-4 text-left">
                     Tipo
                 </th>
-
-                <th class="p-4 text-left">
-                    Estado
-                </th>
                 <th class="p-4 text-left">
                     Zona
                 </th>
+                <th class="p-4 text-left">
+                    Estado
+                </th>
+                
 
                 <th class="p-4 text-left">
                     Acciones
